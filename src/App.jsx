@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Printer, School, Calendar, CreditCard, Layout, Upload, MapPin, Phone, Info } from 'lucide-react';
+import logoSemFundo from './assets/logo-sem-fundo.png';
 
 const App = () => {
   const [config, setConfig] = useState({
@@ -17,7 +18,7 @@ const App = () => {
     dueDate: "01 a 10 de cada mês",
     address: "Rua 12, nº 175 - São Jorge - Petrolina - PE",
     // Configurações de Design
-    logoBase64: null,
+    logoBase64: logoSemFundo,
     primaryColor: "#343a8b", // Azul Escuro
     secondaryColor: "#29abe2", // Azul Claro (Fundo solicitado)
     accentColor: "#ed1c24", // Vermelho
@@ -64,7 +65,7 @@ const App = () => {
                   <School size={24} />
                 </div>
               )}
-              <button 
+              <button
                 onClick={() => fileInputRef.current.click()}
                 className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-white border border-slate-300 rounded-lg text-sm font-semibold hover:bg-slate-100 transition-colors"
               >
@@ -160,8 +161,9 @@ const App = () => {
 
       <style>{`
         @media print {
-          body { background: white !important; margin: 0; padding: 0; }
+          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: white !important; margin: 0; padding: 0; }
           @page { size: A4 portrait; margin: 0; }
+          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
       `}</style>
     </div>
@@ -171,12 +173,12 @@ const App = () => {
 const A4Page = ({ config }) => (
   <div className="bg-white w-[210mm] min-h-[297mm] p-[10mm] flex flex-col box-border shadow-2xl print:shadow-none">
     {[1, 2, 3, 4].map((n) => (
-      <div 
-        key={n} 
+      <div
+        key={n}
         className="w-full h-[65mm] relative border border-dashed border-slate-400 flex mb-[8mm] last:mb-0 box-border rounded-sm overflow-hidden"
       >
         {/* CONTRACAPA (LADO ESQUERDO) - FUNDO AZUL CLARO */}
-        <div 
+        <div
           className="w-1/2 h-full p-4 flex flex-col justify-between relative"
           style={{ backgroundColor: config.secondaryColor }}
         >
@@ -216,7 +218,7 @@ const A4Page = ({ config }) => (
 
         {/* CAPA (LADO DIREITO) - FUNDO BRANCO */}
         <div className="w-1/2 h-full p-4 flex flex-col justify-between bg-white relative">
-          
+
           {/* Cabeçalho Capa */}
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-2">
@@ -248,33 +250,33 @@ const A4Page = ({ config }) => (
           {/* Título Central */}
           <div className="my-2 text-center">
             <h1 className="text-xl font-black italic uppercase tracking-tighter leading-none" style={{ color: config.primaryColor }}>
-              Carnê de <br/>
+              Carnê de <br />
               <span className="text-2xl">Pagamento</span>
             </h1>
           </div>
 
           {/* Campos Aluno */}
           <div className="space-y-2 border-t pt-2 border-slate-100">
-             <div>
-                <label className="text-[7px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Aluno(a)</label>
-                <div className="w-full border-b border-slate-200 h-5 font-bold italic text-slate-700 text-[11px] px-1">
-                  {config.studentName}
+            <div>
+              <label className="text-[7px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Aluno(a)</label>
+              <div className="w-full border-b border-slate-200 h-5 font-bold italic text-slate-700 text-[11px] px-1">
+                {config.studentName}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[7px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Responsável</label>
+                <div className="w-full border-b border-slate-200 h-5 font-bold italic text-slate-700 text-[11px] px-1 truncate">
+                  {config.guardianName}
                 </div>
-             </div>
-             <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[7px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Responsável</label>
-                  <div className="w-full border-b border-slate-200 h-5 font-bold italic text-slate-700 text-[11px] px-1 truncate">
-                    {config.guardianName}
-                  </div>
+              </div>
+              <div>
+                <label className="text-[7px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Contrato</label>
+                <div className="w-full border-b border-slate-200 h-5 font-bold italic text-slate-700 text-[11px] px-1 text-center">
+                  {config.enrollment}
                 </div>
-                <div>
-                  <label className="text-[7px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Contrato</label>
-                  <div className="w-full border-b border-slate-200 h-5 font-bold italic text-slate-700 text-[11px] px-1 text-center">
-                    {config.enrollment}
-                  </div>
-                </div>
-             </div>
+              </div>
+            </div>
           </div>
 
           {/* Slogan Rodapé */}
